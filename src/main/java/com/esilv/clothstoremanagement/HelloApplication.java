@@ -1,11 +1,14 @@
 package com.esilv.clothstoremanagement;
 
+import com.esilv.clothstoremanagement.model.HibernateUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.hibernate.cfg.Configuration;
 
 import java.io.IOException;
+import java.util.Properties;
 
 public class HelloApplication extends Application {
     @Override
