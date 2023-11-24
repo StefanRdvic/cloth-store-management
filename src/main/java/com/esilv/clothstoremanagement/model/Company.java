@@ -1,15 +1,17 @@
 package com.esilv.clothstoremanagement.model;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
-import javax.persistence.*;
 
 @Entity
-@Table(name = "Enterprise")
+@Table(name = "Company")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Enterprise {
+@Builder
+@Getter
+@Setter
+public class Company {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
