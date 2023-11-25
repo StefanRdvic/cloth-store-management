@@ -14,6 +14,7 @@ module com.esilv.clothstoremanagement {
     requires java.naming;
     requires java.sql;
     requires java.persistence;
+    requires org.slf4j;
     //requires eu.hansolo.tilesfx;
     //requires com.almasb.fxgl.all;
 

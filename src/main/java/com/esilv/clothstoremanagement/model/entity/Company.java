@@ -18,9 +18,9 @@ public class Company {
     private Long id;
     @Column(name="capital")
     private double capital;
-    @Column(name="sells")
-    private double sells;
-    @Column(name="buys")
+    @Column(name="sales")
+    private double sales;
+    @Column(name="expenses")
     private double buys;
 
 }
