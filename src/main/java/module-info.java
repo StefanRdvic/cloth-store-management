@@ -16,6 +16,7 @@ module com.esilv.clothstoremanagement {
     requires java.persistence;
     //requires eu.hansolo.tilesfx;
     //requires com.almasb.fxgl.all;
+
     opens com.esilv.clothstoremanagement to javafx.fxml;
     opens com.esilv.clothstoremanagement.model to org.hibernate.orm.core;
     exports com.esilv.clothstoremanagement;
