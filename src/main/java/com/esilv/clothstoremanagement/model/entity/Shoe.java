@@ -1,4 +1,4 @@
-package com.esilv.clothstoremanagement.model;
+package com.esilv.clothstoremanagement.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Getter
 @Setter
-public class Shoes extends Product{
+public class Shoe extends Product{
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

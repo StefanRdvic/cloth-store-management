@@ -1,7 +1,9 @@
-package com.esilv.clothstoremanagement.model;
+package com.esilv.clothstoremanagement.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.io.Serializable;
 
 
 @Entity
@@ -10,7 +12,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class Product {
+@Getter
+@Setter
+public abstract class Product implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)

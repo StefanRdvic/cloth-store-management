@@ -1,5 +1,6 @@
 package com.esilv.clothstoremanagement;
 
+import com.esilv.clothstoremanagement.model.HibernateUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
