@@ -8,11 +8,16 @@ module com.esilv.clothstoremanagement {
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
+    requires static lombok;
+    requires jakarta.persistence;
+    requires org.hibernate.orm.core;
+    requires java.naming;
+    requires java.sql;
+    requires java.persistence;
     //requires eu.hansolo.tilesfx;
     //requires com.almasb.fxgl.all;
 
-    requires static lombok;
-
     opens com.esilv.clothstoremanagement to javafx.fxml;
+    opens com.esilv.clothstoremanagement.model to org.hibernate.orm.core;
     exports com.esilv.clothstoremanagement;
 }
