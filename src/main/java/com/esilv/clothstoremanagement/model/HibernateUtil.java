@@ -18,13 +18,14 @@ public class HibernateUtil {
             Configuration configuration = new Configuration();
             Properties props = new Properties();
             props.put("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
-            props.put("hibernate.connection.url", "jdbc:mysql://localhost:3306/shop");
+            props.put("hibernate.connection.url", "jdbc:mysql://localhost:3306/shop?createDatabaseIfNotExist=true");
             props.put("hibernate.connection.username", "root");
             props.put("hibernate.connection.password", "91502");
             props.put("hibernate.hbm2ddl.auto", "create");
             props.put("hibernate.current_session_context_class", "thread");
             configuration.setProperties(props);
-            configuration.addAnnotatedClass(Company.class);
+            configuration.addAnnotatedClass(Company.class).addAnnotatedClass(Product.class).addAnnotatedClass(Accessory.class)
+                    .addAnnotatedClass(Cloth.class).addAnnotatedClass(Shoes.class);
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
