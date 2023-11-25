@@ -14,10 +14,6 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 public class Cloth extends Product{
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @Column(name = "size")
     private int size;
 }

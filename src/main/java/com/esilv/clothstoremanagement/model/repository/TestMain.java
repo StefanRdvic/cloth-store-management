@@ -24,6 +24,6 @@ public class TestMain {
                 .getFactory()
                 .getRepositoryFactory(Cloth.class)
                 .findAll()
-                .forEach(c -> System.out.println(c.getName()));
+                .forEach(c -> System.out.println(c.getName()+c.getSize()+c.getRetailPrice()+c.getId()));
     }
 }

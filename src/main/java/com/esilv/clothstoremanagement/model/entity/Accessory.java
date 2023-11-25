@@ -1,22 +1,12 @@
 package com.esilv.clothstoremanagement.model.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.Table;
 
 
 @Entity
 @Table(name="Accessory")
 @PrimaryKeyJoinColumn(name = "id")
-@AllArgsConstructor
-@NoArgsConstructor
-@SuperBuilder
-@Getter
-@Setter
 public class Accessory extends Product{
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
 }
