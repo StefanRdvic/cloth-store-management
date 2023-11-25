@@ -1,16 +1,16 @@
 package com.esilv.clothstoremanagement.model;
 
-import lombok.Getter;
+import com.esilv.clothstoremanagement.repository.CompanyRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import java.util.List;
 import java.util.Properties;
 
 public class HibernateUtil {
-    @Getter
     private static SessionFactory sessionFactory;
 
     static {
@@ -34,13 +34,7 @@ public class HibernateUtil {
         }
     }
 
-    public static void main(String[] args) {
-        Session s=sessionFactory.getCurrentSession();
-        Company e= Company.builder().sells(1).buys(1).capital(1).build();
-        s.beginTransaction();
-        s.persist(e);
-        s.getTransaction().commit();
-        s.close();
-
+    public static Session getSession(){
+        return sessionFactory.getCurrentSession();
     }
 }
