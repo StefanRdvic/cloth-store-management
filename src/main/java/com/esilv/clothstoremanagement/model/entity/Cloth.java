@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @PrimaryKeyJoinColumn(name = "id")
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @Getter
 @Setter
 public class Cloth extends Product{

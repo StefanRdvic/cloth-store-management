@@ -6,14 +6,14 @@ import lombok.experimental.SuperBuilder;
 
 
 @Entity
-@Table(name="Shoes")
+@Table(name="Shoe")
 @PrimaryKeyJoinColumn(name = "id")
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @Getter
 @Setter
 public class Shoe extends Product{
     @Column(name = "size")
-    private int size;
+    private float size;
 }

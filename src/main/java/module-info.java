@@ -19,6 +19,10 @@ module com.esilv.clothstoremanagement {
     //requires com.almasb.fxgl.all;
 
     opens com.esilv.clothstoremanagement to javafx.fxml;
-    opens com.esilv.clothstoremanagement.model.entity to org.hibernate.orm.core;
+    opens com.esilv.clothstoremanagement.controller to javafx.fxml;
+    opens com.esilv.clothstoremanagement.model.entity to javafx.base, org.hibernate.orm.core;
     exports com.esilv.clothstoremanagement;
+    exports com.esilv.clothstoremanagement.controller;
+    exports com.esilv.clothstoremanagement.model.entity;
+
 }

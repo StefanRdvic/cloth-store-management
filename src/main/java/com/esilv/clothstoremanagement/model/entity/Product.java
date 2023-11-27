@@ -9,8 +9,7 @@ import java.io.Serializable;
 @Entity
 @Table(name="Product")
 @Inheritance(strategy = InheritanceType.JOINED)
-@SuperBuilder
-@AllArgsConstructor
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @Getter
 @Setter
