@@ -126,10 +126,12 @@ public abstract class AbstractProductController<T extends Product> {
     @FXML
     void initialize() {
         searchTextField.textProperty().addListener((obs, oldValue, newValue) ->{
-            tableView.setItems(
-                    FXCollections.observableList(fetch(0, newValue))
-            );
-            pagination.setCurrentPageIndex(0);
+            if(pagination.getCurrentPageIndex() == 0)
+                tableView.setItems(
+                        FXCollections.observableList(fetch(0, newValue))
+                );
+            else
+                pagination.setCurrentPageIndex(1); // calls the page factory (update table view)
             pagination.setPageCount(getPageCount());
         });
 
