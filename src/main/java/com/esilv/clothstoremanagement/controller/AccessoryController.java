@@ -30,6 +30,7 @@ public class AccessoryController extends AbstractProductController<Accessory>{
                         .name(nameTextField.getText())
                         .retailPrice(Float.parseFloat(retailPriceTextField.getText()))
                         .resellPrice(Float.parseFloat(resellPriceTextField.getText()))
+                        .stock(Integer.parseInt(stockTextField.getText()))
                         .discount(Float.parseFloat(discountTextField.getText()))
                         .build());
     }
@@ -55,5 +56,12 @@ public class AccessoryController extends AbstractProductController<Accessory>{
     @Override
     protected void update(Accessory item) {
         RepositoryProvider.provider().getRepository(Accessory.class).update(item);
+    }
+
+    @Override
+    protected void updateStock(int quantity, Accessory item) {
+        RepositoryProvider.provider().getRepository(Accessory.class).update(
+                item.toBuilder().stock(item.getStock() + quantity).build()
+        );
     }
 }

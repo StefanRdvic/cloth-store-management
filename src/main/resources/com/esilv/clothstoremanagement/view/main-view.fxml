@@ -1,17 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="450.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esilv.clothstoremanagement.controller.MainController">
    <children>
       <TabPane layoutX="-3.0" prefHeight="450.0" prefWidth="990.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab text="DashBoard">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Text layoutX="44.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capital " />
+                        <Text layoutX="44.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Global income" />
+                        <Text layoutX="44.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Global cost" />
+                        <TextField fx:id="capitalTextField" editable="false" layoutX="167.0" layoutY="63.0" />
+                        <TextField fx:id="globalIncomeTextFIeld" editable="false" layoutX="167.0" layoutY="118.0" />
+                        <TextField fx:id="globalCostTextField" editable="false" layoutX="167.0" layoutY="173.0" />
+                        <Separator layoutX="344.0" layoutY="9.0" orientation="VERTICAL" prefHeight="403.0" prefWidth="0.0" />
+                        <Text layoutX="386.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last update" />
+                        <TableView fx:id="actionTableView" layoutX="386.0" layoutY="123.0" prefHeight="254.0" prefWidth="574.0">
+                          <columns>
+                            <TableColumn fx:id="actionColumn" editable="false" prefWidth="388.0001220703125" text="Action" />
+                            <TableColumn fx:id="dateColumn" editable="false" prefWidth="183.9998779296875" text="Date" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <TextField fx:id="lastUpdateTextField" editable="false" layoutX="488.0" layoutY="63.0" prefHeight="26.0" prefWidth="307.0" />
+                        <Text layoutX="44.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="General Information">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="387.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Session traffic">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                     </children></AnchorPane>
               </content>
             </Tab>
           <Tab text="Cloth">

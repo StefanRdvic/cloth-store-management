@@ -12,15 +12,7 @@ import org.hibernate.cfg.Configuration;
 @Slf4j
 public class HibernateUtil {
 
-    @Getter
+    @Getter(lazy = true)
     @Accessors(fluent = true)
-    private static SessionFactory sessionFactory;
-
-    static {
-        try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
-        } catch (Exception e) {
-            log.error("hibernate.cfg.xml misconfigured", new Throwable("Database Connection not established"));
-        }
-    }
+    private final static SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 }

@@ -13,6 +13,7 @@ public interface CrudRepository<T> {
         return findAll(Integer.MAX_VALUE, 0);
     }
 
+    T findFirst();
     void update(T item);
     void save(T item);
     void delete(T item);

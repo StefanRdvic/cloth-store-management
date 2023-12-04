@@ -12,7 +12,7 @@ import org.hibernate.query.SelectionQuery;
 @NoArgsConstructor()
 public class AccessoryRepository extends AbstractRepository<Accessory> {
 
-    @Getter
+    @Getter(lazy = true)
     @Accessors(fluent = true)
     private final static AccessoryRepository repository = new AccessoryRepository();
 

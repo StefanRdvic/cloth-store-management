@@ -15,5 +15,5 @@ import lombok.experimental.SuperBuilder;
 @Setter
 public class Cloth extends Product{
     @Column(name = "size")
-    private int size;
+    private String size;
 }

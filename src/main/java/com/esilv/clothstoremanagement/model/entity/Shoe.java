@@ -15,5 +15,5 @@ import lombok.experimental.SuperBuilder;
 @Setter
 public class Shoe extends Product{
     @Column(name = "size")
-    private float size;
+    private double size;
 }

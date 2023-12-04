@@ -1,14 +1,18 @@
 package com.esilv.clothstoremanagement.model.repository;
 
+import com.esilv.clothstoremanagement.model.HibernateUtil;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.hibernate.event.service.spi.EventListenerRegistry;
+import org.hibernate.event.spi.EventType;
+import org.hibernate.internal.SessionFactoryImpl;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RepositoryProvider {
 
-    @Getter
+    @Getter(lazy = true)
     @Accessors(fluent = true)
     private static final RepositoryProvider provider = new RepositoryProvider();
 
@@ -21,5 +25,17 @@ public class RepositoryProvider {
             case "Shoe" -> ShoeRepository.repository();
             default -> throw new IllegalStateException("Unexpected value: " + clazz.getSimpleName());
         };
+    }
+
+    public void listen(RepositoryListener listener){
+        EventListenerRegistry eventListenerRegistry = ((SessionFactoryImpl) HibernateUtil.sessionFactory())
+                .getServiceRegistry()
+                .getService(EventListenerRegistry.class);
+
+        assert eventListenerRegistry != null;
+
+        eventListenerRegistry.appendListeners(EventType.POST_INSERT, listener);
+        eventListenerRegistry.appendListeners(EventType.POST_DELETE, listener);
+        eventListenerRegistry.appendListeners(EventType.POST_UPDATE, listener);
     }
 }

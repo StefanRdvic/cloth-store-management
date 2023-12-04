@@ -1,6 +1,5 @@
 package com.esilv.clothstoremanagement;
 
-import com.esilv.clothstoremanagement.model.HibernateUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,6 +13,11 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("view/main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        stage.setMaxWidth(1000);
+        stage.setMinWidth(1000);
+        stage.setMinHeight(480);
+        stage.setMaxHeight(480);
+        stage.setResizable(false);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

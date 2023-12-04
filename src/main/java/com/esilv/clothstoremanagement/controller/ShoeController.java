@@ -3,15 +3,19 @@ package com.esilv.clothstoremanagement.controller;
 import com.esilv.clothstoremanagement.model.entity.Shoe;
 import com.esilv.clothstoremanagement.model.repository.RepositoryProvider;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.controlsfx.validation.ValidationResult;
 
 import java.util.List;
 
+import static com.esilv.clothstoremanagement.controller.AbstractProductController.SelectionState.MULTIPLE_SELECTION;
+
 public class ShoeController extends AbstractProductController<Shoe>{
     @FXML
-    private ChoiceBox<Float> sizeChoiceBox;
+    private TextField sizeTextField;
 
     @FXML
     private TableColumn<Shoe, Integer> sizeColumn;
@@ -19,30 +23,32 @@ public class ShoeController extends AbstractProductController<Shoe>{
     @Override
     protected void initialize() {
         super.initialize();
+    }
+
+    @Override
+    protected void setItemValidation() {
+        super.setItemValidation();
+        itemValidation.registerValidator(sizeTextField, (Control c, String newValue) ->
+                ValidationResult.fromErrorIf(c, "The size must be a positive number greater than 0.1",
+                        !newValue.matches("[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?") || Double.parseDouble(newValue) < 1));
+    }
+
+    @Override
+    protected void setTableView() {
+        super.setTableView();
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
     }
 
     @Override
-    protected void onSelection(Shoe item) {
-        super.onSelection(item);
-        sizeChoiceBox.setDisable(false);
-        sizeChoiceBox.setValue(item.getSize());
+    protected void setFormState(SelectionState state) {
+        super.setFormState(state);
+        sizeTextField.setDisable(state.equals(MULTIPLE_SELECTION));
     }
 
     @Override
-    protected void onDeselection() {
-        super.onDeselection();
-        sizeChoiceBox.setDisable(false);
-        sizeChoiceBox.setValue(null);
-        sizeChoiceBox.getSelectionModel().clearSelection();
-    }
-
-    @Override
-    protected void onMultipleSelection() {
-        super.onMultipleSelection();
-        sizeChoiceBox.getSelectionModel().clearSelection();
-        sizeChoiceBox.setValue(null);
-        sizeChoiceBox.setDisable(true);
+    protected void setFormValue(Shoe item) {
+        super.setFormValue(item);
+        sizeTextField.setText(item == null ? "" : item.getSize() + "");
     }
 
     @Override
@@ -68,10 +74,11 @@ public class ShoeController extends AbstractProductController<Shoe>{
                 .getRepository(Shoe.class)
                 .save(Shoe.builder()
                         .name(nameTextField.getText())
-                        .retailPrice(Float.parseFloat(retailPriceTextField.getText()))
-                        .resellPrice(Float.parseFloat(resellPriceTextField.getText()))
-                        .discount(Float.parseFloat(discountTextField.getText()))
-                        .size(sizeChoiceBox.getValue())
+                        .retailPrice(Double.parseDouble(retailPriceTextField.getText()))
+                        .resellPrice(Double.parseDouble(resellPriceTextField.getText()))
+                        .stock(Integer.parseInt(stockTextField.getText()))
+                        .discount(Double.parseDouble(discountTextField.getText()))
+                        .size(Double.parseDouble(sizeTextField.getText()))
                         .build());
     }
 
@@ -86,11 +93,10 @@ public class ShoeController extends AbstractProductController<Shoe>{
                 .getSelectionModel()
                 .getSelectedItem()
                 .toBuilder()
-                .retailPrice(Float.parseFloat(retailPriceTextField.getText()))
-                .resellPrice(Float.parseFloat(resellPriceTextField.getText()))
-                .discount(Float.parseFloat(discountTextField.getText()))
-                .stock(Integer.parseInt(stockTextField.getText()))
-                .size(sizeChoiceBox.getValue())
+                .retailPrice(Double.parseDouble(retailPriceTextField.getText()))
+                .resellPrice(Double.parseDouble(resellPriceTextField.getText()))
+                .discount(Double.parseDouble(discountTextField.getText()))
+                .size(Double.parseDouble(sizeTextField.getText()))
                 .build();
     }
 
@@ -98,4 +104,13 @@ public class ShoeController extends AbstractProductController<Shoe>{
     protected void update(Shoe item) {
         RepositoryProvider.provider().getRepository(Shoe.class).update(item);
     }
+
+    @Override
+    protected void updateStock(int quantity, Shoe item) {
+        RepositoryProvider.provider().getRepository(Shoe.class).update(
+                item.toBuilder().stock(item.getStock() + quantity).build()
+        );
+    }
+
+
 }

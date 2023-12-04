@@ -24,6 +24,13 @@ public abstract class AbstractRepository<T> implements CrudRepository<T>{
     }
 
     @Override
+    public T findFirst() {
+        return HibernateUtil.sessionFactory().fromTransaction(
+                session -> createSelectionQuery(session).setMaxResults(1).uniqueResult()
+        );
+    }
+
+    @Override
     public void update(T item) {
         HibernateUtil.sessionFactory().inTransaction(session -> session.merge(item));
     }

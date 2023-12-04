@@ -22,11 +22,11 @@ public abstract class Product implements Serializable {
     @Column(name = "name")
     private String name;
     @Column(name = "retailPrice")
-    private float retailPrice;
+    private double retailPrice;
     @Column(name = "resellPrice")
-    private float resellPrice;
+    private double resellPrice;
     @Column(name = "stock")
     private int stock;
     @Column(name = "discount")
-    private float discount;
+    private double discount;
 }

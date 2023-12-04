@@ -8,7 +8,7 @@ import lombok.*;
 @Table(name = "Company")
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 @Getter
 @Setter
 public class Company {
@@ -18,9 +18,8 @@ public class Company {
     private Long id;
     @Column(name="capital")
     private double capital;
-    @Column(name="sales")
-    private double sales;
-    @Column(name="expenses")
-    private double buys;
-
+    @Column(name="global_income")
+    private double globalIncome;
+    @Column(name="global_cost")
+    private double globalCost;
 }

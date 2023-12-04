@@ -14,13 +14,13 @@ import org.hibernate.query.SelectionQuery;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CompanyRepository extends AbstractRepository<Company> {
 
-    @Getter
+    @Getter(lazy = true)
     @Accessors(fluent = true)
     private static final CompanyRepository repository = new CompanyRepository();
 
     @Override
     protected SelectionQuery<Company> createSelectionQuery(Session session) {
-        throw new RuntimeException("no selection for Company");
+        return session.createSelectionQuery("from Company", Company.class);
     }
 
     @Override

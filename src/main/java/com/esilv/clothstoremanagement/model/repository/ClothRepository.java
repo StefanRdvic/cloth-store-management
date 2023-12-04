@@ -13,7 +13,7 @@ import org.hibernate.query.SelectionQuery;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ClothRepository extends AbstractRepository<Cloth> {
 
-    @Getter
+    @Getter(lazy = true)
     @Accessors(fluent = true)
     private final static ClothRepository repository = new ClothRepository();
 

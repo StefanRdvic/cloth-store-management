@@ -3,12 +3,15 @@ package com.esilv.clothstoremanagement.controller;
 import com.esilv.clothstoremanagement.model.entity.Cloth;
 import com.esilv.clothstoremanagement.model.repository.RepositoryProvider;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.controlsfx.validation.Validator;
 
 import java.util.List;
+
+import static com.esilv.clothstoremanagement.controller.AbstractProductController.SelectionState.MULTIPLE_SELECTION;
 
 @Slf4j
 public class ClothController extends AbstractProductController<Cloth>{
@@ -17,33 +20,35 @@ public class ClothController extends AbstractProductController<Cloth>{
     private TableColumn<Cloth, Integer> sizeColumn;
 
     @FXML
-    private TextField sizeTextField;
+    private ChoiceBox<String> sizeChoiceBox;
 
     @Override
     protected void initialize() {
         super.initialize();
+    }
+
+    @Override
+    protected void setItemValidation() {
+        super.setItemValidation();
+        itemValidation.registerValidator(sizeChoiceBox, Validator.createEmptyValidator("size is required"));
+    }
+
+    @Override
+    protected void setTableView() {
+        super.setTableView();
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
     }
 
     @Override
-    protected void onSelection(Cloth item) {
-        super.onSelection(item);
-        sizeTextField.setDisable(false);
-        sizeTextField.setText(String.valueOf(item.getSize()));
+    protected void setFormState(SelectionState state) {
+        super.setFormState(state);
+        sizeChoiceBox.setDisable(state.equals(MULTIPLE_SELECTION));
     }
 
     @Override
-    protected void onDeselection() {
-        super.onDeselection();
-        sizeTextField.setDisable(false);
-        sizeTextField.setText("");
-    }
-
-    @Override
-    protected void onMultipleSelection() {
-        super.onMultipleSelection();
-        sizeTextField.setText("");
-        sizeTextField.setDisable(true);
+    protected void setFormValue(Cloth item) {
+        super.setFormValue(item);
+        sizeChoiceBox.getSelectionModel().select(item == null ? "" : item.getSize());
     }
 
     @Override
@@ -69,10 +74,11 @@ public class ClothController extends AbstractProductController<Cloth>{
                 .getRepository(Cloth.class)
                 .save(Cloth.builder()
                         .name(nameTextField.getText())
-                        .retailPrice(Float.parseFloat(retailPriceTextField.getText()))
-                        .resellPrice(Float.parseFloat(resellPriceTextField.getText()))
-                        .discount(Float.parseFloat(discountTextField.getText()))
-                        .size(Integer.parseInt(sizeTextField.getText()))
+                        .retailPrice(Double.parseDouble(retailPriceTextField.getText()))
+                        .resellPrice(Double.parseDouble(resellPriceTextField.getText()))
+                        .stock(Integer.parseInt(stockTextField.getText()))
+                        .discount(Double.parseDouble(discountTextField.getText()))
+                        .size(sizeChoiceBox.getValue())
                         .build());
     }
 
@@ -87,11 +93,10 @@ public class ClothController extends AbstractProductController<Cloth>{
                 .getSelectionModel()
                 .getSelectedItem()
                 .toBuilder()
-                .retailPrice(Float.parseFloat(retailPriceTextField.getText()))
-                .resellPrice(Float.parseFloat(resellPriceTextField.getText()))
-                .discount(Float.parseFloat(discountTextField.getText()))
-                .stock(Integer.parseInt(stockTextField.getText()))
-                .size(Integer.parseInt(sizeTextField.getText()))
+                .retailPrice(Double.parseDouble(retailPriceTextField.getText()))
+                .resellPrice(Double.parseDouble(resellPriceTextField.getText()))
+                .discount(Double.parseDouble(discountTextField.getText()))
+                .size(sizeChoiceBox.getValue())
                 .build();
     }
 
@@ -100,5 +105,11 @@ public class ClothController extends AbstractProductController<Cloth>{
         RepositoryProvider.provider().getRepository(Cloth.class).update(item);
     }
 
+    @Override
+    protected void updateStock(int quantity, Cloth item) {
+        RepositoryProvider.provider().getRepository(Cloth.class).update(
+                item.toBuilder().stock(item.getStock() + quantity).build()
+        );
+    }
 }
 
