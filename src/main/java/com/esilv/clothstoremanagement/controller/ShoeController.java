@@ -13,6 +13,11 @@ import java.util.List;
 
 import static com.esilv.clothstoremanagement.controller.AbstractProductController.SelectionState.MULTIPLE_SELECTION;
 
+/**
+ * This class is used to manage the shoe view
+ * author: Stefan Radovanovic
+ * author: Yannick li
+ */
 public class ShoeController extends AbstractProductController<Shoe>{
     @FXML
     private TextField sizeTextField;

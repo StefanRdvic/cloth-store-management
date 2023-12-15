@@ -9,7 +9,11 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.hibernate.query.SelectionQuery;
 
-
+/**
+ * This class represents a shoe repository
+ * author: Stefan Radovanovic
+ * author: Yannick li
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ShoeRepository extends AbstractRepository<Shoe> {
 

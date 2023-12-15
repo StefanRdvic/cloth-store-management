@@ -13,6 +13,11 @@ import java.util.List;
 
 import static com.esilv.clothstoremanagement.controller.AbstractProductController.SelectionState.MULTIPLE_SELECTION;
 
+/**
+ * This class is used to manage the cloth view
+ * author: Stefan Radovanovic
+ * author: Yannick li
+ */
 @Slf4j
 public class ClothController extends AbstractProductController<Cloth>{
 

@@ -6,7 +6,11 @@ import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-
+/**
+ * This class represents an accessory
+ * author: Stefan Radovanovic
+ * author: Yannick li
+ */
 @Entity
 @Table(name="Accessory")
 @PrimaryKeyJoinColumn(name = "id")

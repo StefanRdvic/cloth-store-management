@@ -9,6 +9,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.time.LocalDateTime;
 
+/*
+ * This class is used to manage the main view
+ * author: Stefan Radovanovic
+ * author: Yannick li
+ */
 public class MainController implements RepositoryListener {
 
 
@@ -52,9 +57,9 @@ public class MainController implements RepositoryListener {
     private void setCompanyInfo(){
         Company company = RepositoryProvider.provider().getRepository(Company.class).findFirst();
 
-        capitalTextField.setText(company.getCapital() + " $");
-        globalCostTextField.setText(company.getGlobalCost() + " $");
-        globalIncomeTextFIeld.setText(company.getGlobalIncome() + " $");
+        capitalTextField.setText(Math.round(company.getCapital() * 100.0) / 100.0 + " $");
+        globalCostTextField.setText(Math.round(company.getGlobalCost() * 100.0) / 100.0 + " $");
+        globalIncomeTextFIeld.setText(Math.round(company.getGlobalIncome() * 100.0) / 100.0 + " $");
     }
 
     private void setActionTableView(){

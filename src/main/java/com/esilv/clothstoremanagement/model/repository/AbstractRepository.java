@@ -9,6 +9,11 @@ import org.hibernate.query.SelectionQuery;
 
 import java.util.List;
 
+/**
+ * This class is an abstraction for all repositories
+ * author: Stefan Radovanovic
+ * author: Yannick li
+ */
 @Slf4j
 public abstract class AbstractRepository<T> implements CrudRepository<T>{
 
@@ -55,11 +60,34 @@ public abstract class AbstractRepository<T> implements CrudRepository<T>{
                         .uniqueResult());
     }
 
+    /**
+     * This method is used to create a selection query
+     * @param session the session
+     * @return the selection query
+     */
     protected abstract SelectionQuery<T> createSelectionQuery(Session session);
+
+    /**
+     * This method is used to create a selection query
+     * @param session the session
+     * @param searchValue the search value
+     * @return the selection query
+     */
     protected abstract SelectionQuery<T> createSelectionQuery(Session session, String searchValue);
 
+    /**
+     * This method is used to create a count query
+     * @param session the session
+     * @return the count query
+     */
     protected abstract Query<T> createCountQuery(Session session);
 
+    /**
+     * This method is used to create a count query
+     * @param session the session
+     * @param searchValue the search value
+     * @return the count query
+     */
     protected abstract Query<T> createCountQuery(Session session, String searchValue);
 
 }

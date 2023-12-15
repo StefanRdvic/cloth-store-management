@@ -23,7 +23,12 @@ import java.util.function.Function;
 
 import static com.esilv.clothstoremanagement.controller.AbstractProductController.SelectionState.*;
 
-
+/*
+* Abstraction for the product controllers
+* param <T> the type of the product
+* author: Stefan Radovanovic
+* author: Yannick li
+* */
 @Slf4j
 public abstract class AbstractProductController<T extends Product> {
 
@@ -134,7 +139,7 @@ public abstract class AbstractProductController<T extends Product> {
         CrudRepository<Company> repository = RepositoryProvider.provider().getRepository(Company.class);
 
         Company company = repository.findFirst();
-        double cost = (getQuantity() * getValueFromItem(T::getRetailPrice, Double.MAX_VALUE));
+        double cost = (getQuantity() * getValueFromSelectedItem(T::getRetailPrice, Double.MAX_VALUE));
 
         repository.update(company.toBuilder()
                 .capital(company.getCapital() - cost)
@@ -153,7 +158,10 @@ public abstract class AbstractProductController<T extends Product> {
         CrudRepository<Company> repository = RepositoryProvider.provider().getRepository(Company.class);
 
         Company company = repository.findFirst();
-        double cost = (getQuantity() * getValueFromItem(T::getRetailPrice, Double.MAX_VALUE)) * getValueFromItem(T::getDiscount, Double.MAX_VALUE);
+        double cost = (getQuantity() * getValueFromSelectedItem(T::getResellPrice, Double.MAX_VALUE));
+
+        //apply discount
+        cost -= cost * getValueFromSelectedItem(T::getDiscount, 0.0);
 
         repository.update(company.toBuilder()
                 .capital(company.getCapital() + cost)
@@ -185,17 +193,23 @@ public abstract class AbstractProductController<T extends Product> {
     protected void setItemValidation(){
         itemValidation.registerValidator(nameTextField, Validator.createEmptyValidator("Name is required"));
 
-        itemValidation.registerValidator(retailPriceTextField, (Control c, String newValue) ->
-                ValidationResult.fromErrorIf(c, "The retail price must be a positive number greater than 0.1",
-                        !newValue.matches("[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?") || Double.parseDouble(newValue) < 0.1));
+        itemValidation.registerValidator(retailPriceTextField,
+                (Control c, String newValue) ->
+                    ValidationResult.fromErrorIf(
+                            c,
+                            "The retail price must be a positive number greater than 0.1",
+                        !newValue.matches("[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?")
+                                || Double.parseDouble(newValue) < 0.1
+                    )
+        );
 
         itemValidation.registerValidator(resellPriceTextField, (Control c, String newValue) ->
                 ValidationResult.fromErrorIf(c, "The resell price must be a positive number greater than 0.1",
                         !newValue.matches("[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?") || Double.parseDouble(newValue) < 0.1));
 
         itemValidation.registerValidator(stockTextField, (Control c, String newValue) ->
-                ValidationResult.fromErrorIf(c, "The stock must be a positive integer greater than 1",
-                        !newValue.matches("^[0-9]+$") || Integer.parseInt(newValue) < 1));
+                ValidationResult.fromErrorIf(c, "The stock must be a positive integer greater than 0",
+                        !newValue.matches("^[0-9]+$") || Integer.parseInt(newValue) < 0));
 
         itemValidation.registerValidator(discountTextField, (Control c, String newValue) ->{
             double val;
@@ -331,18 +345,49 @@ public abstract class AbstractProductController<T extends Product> {
         );
     }
 
+    /**
+     * Fetch the items from the database
+     * @param pageNumber the page number
+     * @param searchValue the search value
+     * @return the list of items
+     */
     protected abstract List<T> fetch(int pageNumber, String searchValue);
 
+    /**
+     * Count the number of items in the database
+     * @param searchValue the search value
+     * @return the number of items
+     */
     protected abstract long count(String searchValue);
 
+    /**
+     * Create an item in the database
+     */
     protected abstract void create();
 
+    /**
+     * Delete an item from the database
+     * @param item the item to delete
+     */
     protected abstract void delete(T item);
 
+    /**
+     * Retrieve the updated item from the form
+     * @return the updated item
+     */
     protected abstract T retrieveUpdated();
 
+    /**
+     * Update an item in the database
+     * @param item the item to update
+     */
     protected abstract void update(T item);
 
+    /**
+     * Update the stock of an item in the database
+     * @param quantity the quantity to add or remove
+     * @param item the item to update
+     */
     protected abstract void updateStock(int quantity, T item);
 
     private int getQuantity(){
@@ -352,7 +397,14 @@ public abstract class AbstractProductController<T extends Product> {
     }
 
     // Obscure method :)
-    private <F> F getValueFromItem(Function<T, F> getter, F orElseValue){
+    /**
+     * Get the value from the selected item
+     * @param getter the getter function
+     * @param orElseValue the value to return if the selected item is null
+     * @param <F> the type of the value
+     * @return the value
+     */
+    private <F> F getValueFromSelectedItem(Function<T, F> getter, F orElseValue){
         return Optional.ofNullable(tableView.getSelectionModel().getSelectedItem())
                 .map(getter)
                 .orElse(orElseValue);
@@ -360,10 +412,10 @@ public abstract class AbstractProductController<T extends Product> {
 
     protected boolean canPurchase(){
         return RepositoryProvider.provider().getRepository(Company.class).findFirst().getCapital()
-                >= getQuantity() * getValueFromItem(T::getRetailPrice, Double.MAX_VALUE);
+                >= getQuantity() * getValueFromSelectedItem(T::getRetailPrice, Double.MAX_VALUE);
     }
 
     protected boolean canSell(){
-        return getQuantity() <= getValueFromItem(T::getStock, Integer.MAX_VALUE);
+        return getQuantity() <= getValueFromSelectedItem(T::getStock, Integer.MAX_VALUE);
     }
 }

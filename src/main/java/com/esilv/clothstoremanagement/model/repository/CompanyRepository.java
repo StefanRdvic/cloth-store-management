@@ -10,7 +10,11 @@ import org.hibernate.query.Query;
 import org.hibernate.query.SelectionQuery;
 
 
-
+/**
+ * This class represents a company repository
+ * author: Stefan Radovanovic
+ * author: Yannick li
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CompanyRepository extends AbstractRepository<Company> {
 

@@ -6,12 +6,24 @@ import org.hibernate.persister.entity.EntityPersister;
 
 import java.time.LocalDateTime;
 
+/**
+ * This interface represents a repository listener
+ * see <a href="https://docs.jboss.org/hibernate/orm/6.4/javadocs/org/hibernate/event/spi/package-summary.html">...</a>
+ * author: Stefan Radovanovic
+ * author: Yannick li
+ */
 public interface RepositoryListener extends
         PostDeleteEventListener,
         PostInsertEventListener,
         PostUpdateEventListener {
 
+    /**
+     * This method is called when an action is performed
+     * @param action the action performed
+     */
     void onChange(Action action);
+
+    //TODO enhance action with more information
 
     @Override
     default void onPostDelete(PostDeleteEvent postDeleteEvent) {

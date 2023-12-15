@@ -3,7 +3,11 @@ package com.esilv.clothstoremanagement.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-
+/**
+ * This class represents a company
+ * author: Stefan Radovanovic
+ * author: Yannick li
+ */
 @Entity
 @Table(name = "Company")
 @AllArgsConstructor

@@ -5,6 +5,11 @@ import com.esilv.clothstoremanagement.model.repository.RepositoryProvider;
 
 import java.util.List;
 
+/*
+ * This class is used to manage the accessory view
+ * author: Stefan Radovanovic
+ * author: Yannick li
+ * */
 public class AccessoryController extends AbstractProductController<Accessory>{
 
 

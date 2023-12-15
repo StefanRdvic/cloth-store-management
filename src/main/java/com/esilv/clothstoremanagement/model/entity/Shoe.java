@@ -4,7 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-
+/**
+ * This class represents a shoe
+ * author: Stefan Radovanovic
+ * author: Yannick li
+ */
 @Entity
 @Table(name="Shoe")
 @PrimaryKeyJoinColumn(name = "id")

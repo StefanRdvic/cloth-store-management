@@ -5,7 +5,11 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
-
+/**
+ * This class represents a product
+ * author: Stefan Radovanovic
+ * author: Yannick li
+ */
 @Entity
 @Table(name="Product")
 @Inheritance(strategy = InheritanceType.JOINED)

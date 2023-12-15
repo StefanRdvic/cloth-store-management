@@ -4,7 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-
+/**
+ * This class represents a cloth
+ * author: Stefan Radovanovic
+ * author: Yannick li
+ */
 @Entity
 @Table(name="Cloth")
 @PrimaryKeyJoinColumn(name = "id")
